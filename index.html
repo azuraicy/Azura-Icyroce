@@ -490,6 +490,48 @@
                 margin: 0.5em 0;
             }
         }
+        /* Kode tambahan biar fit di semua layar */
+html, body {
+    max-width: 100%;
+    overflow-x: hidden; /* Biar nggak bisa geser kanan-kiri yang bikin berantakan */
+}
+
+#azura-page, #nancy-page {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 95% !important; /* Biar konten nggak nempel banget ke pinggir layar HP */
+    padding: 1.5em !important;
+}
+
+img {
+    max-width: 100%; /* Biar gambar otomatis ngecil ngikutin ukuran layar */
+    height: auto !important;
+}
+
+.banner-slider {
+    height: auto !important;
+    aspect-ratio: 16 / 9; /* Jaga bentuk banner biar nggak gepeng */
+}
+
+@media (max-width: 768px) {
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    nav a {
+        padding: 0.5em 0.8em;
+        font-size: 0.9em;
+    }
+    header h1 {
+        font-size: 1.8em !important;
+    }
+}
     </style>
 </head>
 <body>
@@ -559,10 +601,10 @@
             <section id="on-training">
                 <h2 class="section-title">On Training</h2>
                 <div style="display:flex; gap:1.5em; align-items:center; flex-wrap:wrap;">
-                    <div style="flex:1; min-width:260px;">
+                    <div style="flex:1; min-width:240px;">
                         <img src="idc.png" alt="LUXUOS Image" style="width:100%; height:auto; border-radius:8px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
                     </div>
-                    <div style="flex:1; min-width:240px;" class="click-card" onclick="alert('LUXUOS — klik untuk info lebih lanjut')">
+                    <div style="flex:1; min-width:260px;" class="click-card" onclick="alert('LUXUOS — klik untuk info lebih lanjut')">
                         <h3 style="margin-top:0;">LUXUOS</h3>
                         <p>
                             ⫁⫂ㅤABOUT - 𝐋𝐔𝐗𝐎𝐔𝐒ㅤ⦃ㅤ..ㅤⓘ <br>
@@ -575,13 +617,13 @@
                     <br>
 
 
-                    ㅤㅤㅤㅤㅤㅤㅤㅤ  ㅤTHE STRATEGY ARENA:<br>
+                    THE STRATEGY ARENA:<br>
 
-                    ㅤㅤㅤㅤㅤㅤㅤㅤ  SurviveㅤㅤandㅤㅤTranscend<br>
+                    SurviveㅤㅤandㅤㅤTranscend<br>
 
-                    ㅤㅤㅤㅤㅤㅤㅤㅤㅤAn Immersive Game survival<br>
+                    An Immersive Game survival<br>
 
-                    ㅤㅤㅤㅤㅤㅤㅤㅤInspiredㅤTraineeㅤ— Program<br>
+                    InspiredㅤTraineeㅤ— Program<br>
 
                                 <br>
 
@@ -625,7 +667,7 @@
     <div id="nancy-page" style="display: none;">
         <header>
             <h1>Nancy Jewel Mcdonie</h1>
-            <p>Member Tersayang dari Momoland ✨</p>
+            
         </header>
 
         <nav>
@@ -851,4 +893,3 @@
             initNancySlider();
         });
     </script>
-
