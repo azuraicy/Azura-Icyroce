@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azura Icyroce</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7; /* Background terang */
+            color: #333;
+            line-height: 1.6;
+            text-align: center;
+        }
+        #azura-page, #nancy-page {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+        }
+        header {
+            background-color: #ffb6c1; /* Warna pink lembut */
+            color: white;
+            padding: 1.5em 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        nav {
+            background-color: #e0a3ad; /* Pink sedikit lebih gelap */
+            padding: 0.8em 0;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.8em 1.5em;
+            margin: 0 0.5em;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #c78891; /* Hover effect */
+        }
+        .container {
+            width: 85%;
+            margin: 2em auto;
+            background-color: white;
+            padding: 2.5em;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            text-align: left;
+        }
+        .profile-img {
+            max-width: 300px;
+            height: auto;
+            border-radius: 50%;
+            margin-bottom: 1.5em;
+            border: 5px solid #ffb6c1;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        .section-title {
+            color: #ff69b4; /* Hot pink */
+            font-size: 1.8em;
+            margin-bottom: 1em;
+            border-bottom: 2px solid #ffb6c1;
+            padding-bottom: 0.5em;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5em;
+            margin-top: 1.5em;
+        }
+        .gallery img {
+            width: 100%;
+            height: 200px; /* Tinggi seragam */
+            object-fit: cover; /* Menjaga rasio aspek */
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+        .gallery img:hover {
+            transform: scale(1.03);
+        }
+        footer {
+            background-color: #ffb6c1;
+            color: white;
+            text-align: center;
+            padding: 1.5em 0;
+            margin-top: 3em;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+            position: relative; /* Penting untuk simbol */
+            overflow: hidden; /* Pastikan simbol tidak keluar */
+        }
+        .hidden-symbol {
+            position: absolute;
+            bottom: 5px; /* Posisikan di pojok bawah */
+            right: 5px; /* Posisikan di pojok kanan */
+            font-size: 0.8em; /* Ukuran kecil tapi terlihat */
+            color: rgba(255, 255, 255, 0.30); /* Transparansi 75% dari warna putih */
+            /* Warna putih footer adalah #ffb6c1, jadi warna simbolnya kita buat hampir sama */
+            /* Ini akan sangat sulit dilihat, tapi tidak sama */
+            user-select: none; /* Mencegah seleksi teks */
+            pointer-events: none; /* Mencegah interaksi mouse */
+            z-index: 10;
+        }
+        /* Banner Slider Styles */
+        .banner-slider {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+            background-color: #000;
+        }
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: fadeIn 0.8s;
+        }
+        .slide.active {
+            display: block;
+        }
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .slider-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 5;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .dot.active {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2em;
+            color: white;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            user-select: none;
+            z-index: 5;
+        }
+        .slider-arrow:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .slider-arrow.prev {
+            left: 20px;
+        }
+        .slider-arrow.next {
+            right: 20px;
+        }
+        /* Interactive Button Styles */
+        .interactive-btn {
+            background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+            color: white;
+            border: none;
+            padding: 0.8em 1.5em;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+            margin: 0.5em;
+        }
+        .interactive-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.5);
+        }
+        .interactive-btn:active {
+            transform: translateY(-1px);
+        }
+        /* Clickable Cards */
+        .click-card {
+            background: white;
+            padding: 1.5em;
+            margin: 1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        .click-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.3);
+            background: linear-gradient(135deg, rgba(255, 182, 193, 0.1), rgba(255, 105, 180, 0.1));
+        }
+        /* Expandable Sections */
+        .expand-section {
+            background: linear-gradient(135deg, rgba(255, 182, 193, 0.1), rgba(255, 105, 180, 0.1));
+            border-left: 4px solid #ff69b4;
+            padding: 1.2em;
+            margin: 1.5em 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .expand-section:hover {
+            border-left: 4px solid #ff1493;
+            background: linear-gradient(135deg, rgba(255, 182, 193, 0.2), rgba(255, 105, 180, 0.2));
+        }
+        .expand-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            margin-top: 1em;
+        }
+        .expand-content.show {
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Azura Profile Page (Default - shown first) -->
+    <div id="azura-page" style="display: block;">
+        <header>
+            <h1>Azura Icyroce</h1>
+            <p>Born to Shine</p>
+        </header>
+
+        <nav>
+            <a href="#azura-about">Tentang Azura</a>
+            <a href="#on-training">On Training</a>
+            <a href="#azura-contact">Kontak</a>
+        </nav>
+
+        <!-- Azura Banner Slider -->
+        <div class="banner-slider">
+            <div class="slider-container">
+                <div class="slide active">
+                    <img src="banner jura 1.png" alt="Azura Banner 1">
+                </div>
+                <div class="slide">
+                    <img src="banner jura 1.png" alt="Azura Banner 2">
+                </div>
+                <div class="slide">
+                    <img src="banner jura 1.png" alt="Azura Banner 3">
+                </div>
+                <div class="slide">
+                    <img src="banner jura 1.png" alt="Azura Banner 4">
+                </div>
+            </div>
+            <span class="slider-arrow prev" onclick="changeAzuraSlide(-1)">❮</span>
+            <span class="slider-arrow next" onclick="changeAzuraSlide(1)">❯</span>
+            <div class="slider-controls" id="azura-dots"></div>
+        </div>
+
+        <div class="container">
+            <section id="azura-about">
+                <h2 class="section-title">Tentang Saya</h2>
+                <center>
+                    <img src="nancy.jpg" alt="Azura Icyroce Profile" class="profile-img" onclick="alert('Klik untuk lihat lebih besar!')" style="cursor: pointer;">
+                </center>
+                
+                <div class="expand-section" onclick="toggleExpand(this)">
+                    <strong>Tentang Azura</strong>
+                    <div class="expand-content">
+                        Azura Icyroce adalah sebuah nama yang lahir dari pertemuan antara birunya langit dan 
+                        lembutnya kelopak bunga, sebuah personifikasi dari jiwa kreatif yang meminjam pesona Nancy Jewel Mcdonie sebagai wajah dari ceritanya. Nama Azura yang ia sandang mencerminkan cakrawala yang tak terbatas, selaras dengan cara pandangnya yang luas dalam merangkai narasi visual, sementara Icyroce menjadi simbol kontradiksi yang indah antara keteguhan bunga daisy di tengah musim dingin dan keanggunan mawar yang abadi. Ia menavigasi hiruk-pikuk Seoul bukan sebagai pengikut arus, melainkan sebagai penutur cerita independen yang memadukan kelembutan perasaan dengan ambisi yang tajam. Bagi Azura, setiap potret analog yang ia abadikan adalah bentuk dedikasi terhadap keindahan yang jujur, menjadikannya sosok yang tenang namun penuh kejutan, 
+                        seperti sekuntum mawar yang tetap merekah meski diselimuti embun beku
+                    </div>
+                </div>
+
+                <div class="expand-section" onclick="toggleExpand(this)">
+                    <strong>Fakta Menarik</strong>
+                    <div class="expand-content">
+                        Merangkai narasi visual yang jujur melalui media 
+                        fotografi analog, di mana setiap jepretan menjadi 
+                        jembatan antara emosi yang rapuh layaknya bunga daisy dan 
+                        kekuatan yang abadi seperti mawar. Ia bertekad untuk
+                         mengeksplorasi cakrawala kreativitas tanpa batas, membuktikan bahwa sebuah karya seni bukan sekadar objek estetika, melainkan sebuah nyawa yang mampu bercerita dan memberikan kehangatan bagi siapa pun 
+                        yang menikmatinya di tengah dinginnya dunia.
+                    </div>
+                </div>
+            </section>
+
+            <section id="on-training">
+                <h2 class="section-title">On Training</h2>
+                <div style="display:flex; gap:1.5em; align-items:center; flex-wrap:wrap;">
+                    <div style="flex:1; min-width:260px;">
+                        <img src="idc.png" alt="LUXUOS Image" style="width:100%; height:auto; border-radius:8px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
+                    </div>
+                    <div style="flex:1; min-width:260px;" class="click-card" onclick="alert('LUXUOS — klik untuk info lebih lanjut')">
+                        <h3 style="margin-top:0;">LUXUOS</h3>
+                        <p>
+                            ⫁⫂ㅤABOUT - 𝐋𝐔𝐗𝐎𝐔𝐒ㅤ⦃ㅤ..ㅤⓘ <br>
+
+                    |ㅤㅤLuxous (Luxe Mysterious) is a trainee group<br>
+
+                    |ㅤㅤformed in 2021 under the auspices of Luxe<br>
+
+                    |ㅤㅤCorporation with a different theme each year.<br>
+                    <br>
+
+
+                    ㅤㅤㅤㅤㅤㅤㅤㅤ  ㅤTHE STRATEGY ARENA:<br>
+
+                    ㅤㅤㅤㅤㅤㅤㅤㅤ  SurviveㅤㅤandㅤㅤTranscend<br>
+
+                    ㅤㅤㅤㅤㅤㅤㅤㅤㅤAn Immersive Game survival<br>
+
+                    ㅤㅤㅤㅤㅤㅤㅤㅤInspiredㅤTraineeㅤ— Program<br>
+
+                                <br>
+
+                    ャ   𝖳𝗁𝖾 𝗌𝗎𝗌𝗉𝖾𝖼𝗍  ー    " Rainer Arshades ✱ Lee Jeno"   <br>  
+                    <br>  
+
+
+
+                    Participants will be segmented into competing factions and tasked with navigating a series of adapted, iconic challenges—from the precision,
+
+                    Our mission is to sharpen critical decision-making under duress and discern which team possesses the superior blueprint for triumph. <br>
+
+
+
+
+
+                   <center>❙❘❚❙❙❘❙❚❘❙❘❚❙❙❙❘❚❙❙❘❙❚❘❙❘❚❙❙     ╏    𝗋𝗈𝗅𝖾𝗉𝗅𝖺𝗒 𝖻𝖺𝗌𝖾𝖽</center> 
+
+                    <center> copyright reserve.  𝐋𝐔𝐗𝐎𝐔𝐒 ─ gamemaker</center>
+                        </p>
+                        <p style="font-size:0.9em; color:#666;">Klik kartu untuk melihat lebih lanjut.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="azura-contact">
+                <h2 class="section-title">Hubungi Saya 💬</h2>
+                
+                
+                <div style="display: flex; justify-content: center; flex-wrap: wrap; margin: 1.5em 0;">
+                    <button class="interactive-btn" onclick="alert('📧 Email: icylie.lye@email.com')">📧 Email</button>
+                  
+                    
+
+                
+            </section>
+        </div>
+    </div>
+
+    <!-- Nancy Page (hidden by default) -->
+    <div id="nancy-page" style="display: none;">
+        <header>
+            <h1>Nancy Jewel Mcdonie</h1>
+            <p>Member Tersayang dari Momoland ✨</p>
+        </header>
+
+        <nav>
+            <a href="#about">Tentang Nancy</a>
+          
+            
+        </nav>
+
+        <!-- Nancy Banner Slider -->
+        <div class="banner-slider">
+            <div class="slider-container">
+                <div class="slide active">
+                    <img src="banner nancy.png" alt="Nancy Banner 1">
+                </div>
+                <div class="slide">
+                    <img src="banner nancy.png" alt="Nancy Banner 2">
+                </div>
+                <div class="slide">
+                    <img src="banner nancy.png" alt="Nancy Banner 3">
+                </div>
+                <div class="slide">
+                    <img src="banner nancy.png" alt="Nancy Banner 4">
+                </div>
+                <div class="slide">
+                    <img src="banner nancy.png" alt="Nancy Banner 5">
+                </div>
+            </div>
+            <span class="slider-arrow prev" onclick="changeNancySlide(-1)">❮</span>
+            <span class="slider-arrow next" onclick="changeNancySlide(1)">❯</span>
+            <div class="slider-controls" id="nancy-dots"></div>
+        </div>
+
+        <div class="container">
+            <section id="about">
+                <h2 class="section-title">Profil Nancy 🌟</h2>
+                <center>
+                    <img src="nancy 2.jpeg" alt="Nancy Momoland Profile" class="profile-img" onclick="alert('Klik untuk lihat Nancy lebih dekat!')" style="cursor: pointer;">
+                </center>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1em; margin: 2em 0;">
+                    <div class="click-card" onclick="alert('낸시 (Nancy) | Nama Panggung: Nancy')">
+                        <div style="font-size: 1.5em;">Nama Panggung</div>
+                        <strong>낸시</strong>
+                    </div>
+                    <div class="click-card" onclick="alert('Umur: 25 tahun | Tanggal Lahir: 13 April 2000')">
+                        <div style="font-size: 1.5em;">Umur</div>
+                        <strong>25</strong>
+                    </div>
+                    <div class="click-card" onclick="alert('Posisi: Visual & Maknae | Member termuda Momoland')">
+                        <div style="font-size: 1.5em;">Posisi</div>
+                        <strong>Visual & Maknae</strong>
+                    </div>
+                    <div class="click-card" onclick="alert('Tinggi: 170 cm | Asal: Korea-Amerika')">
+                        <div style="font-size: 1.5em;">Tinggi</div>
+                        <strong>170 cm</strong>
+                    </div>
+                </div>
+
+                <div class="expand-section" onclick="toggleExpand(this)">
+                    <strong>📝 Tentang Nancy</strong>
+                    <div class="expand-content">
+                        Nancy Jewel Mcdonie (낸시 맥도니) adalah seorang penyanyi, aktris, dan penari Korea-Amerika yang dikenal sebagai anggota grup idola Momoland. Lahir pada 13 April 2000, Nancy dikenal karena visualnya yang menawan, suara yang indah, dan bakat menarinya yang luar biasa. Dia sering dijuluki "Visual dan Maknae" dari grup.
+                    </div>
+                </div>
+
+                <div class="expand-section" onclick="toggleExpand(this)">
+                    <strong>🌟 Karir Nancy</strong>
+                    <div class="expand-content">
+                        Sejak debutnya bersama Momoland pada tahun 2016, Nancy telah memenangkan hati banyak penggemar di seluruh dunia. Selain aktivitas grup, ia aktif di berbagai program televisi, drama, dan menjadi model untuk berbagai merek. Dengan pesona dan bakatnya, Nancy terus bersinar sebagai salah satu idola K-pop paling populer.
+                    </div>
+                </div>
+            </section>
+
+            
+
+           
+        </div>
+    </div>
+
+    <!-- Footers -->
+    <div id="azura-footer">
+        <footer>
+            <p>&copy; 2026 by Azura Icyroce</p>
+            <div style="margin-top: 1em;">
+                <button onclick="goToPage('nancy')" style="background: linear-gradient(135deg, #ffb6c1, #ff69b4); color: white; border: none; padding: 0.8em 1.5em; border-radius: 25px; cursor: pointer; font-size: 1em; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);">Tentang Nancy →</button>
+            </div>
+            <div class="hidden-symbol">.</div>
+        </footer>
+    </div>
+
+    <div id="nancy-footer" style="display: none;">
+        <footer>
+            <p>&copy; 2026 by Azura Icyroce</p>
+            <div style="margin-top: 1em;">
+                <button onclick="goToPage('azura')" style="background: linear-gradient(135deg, #ffb6c1, #ff69b4); color: white; border: none; padding: 0.8em 1.5em; border-radius: 25px; cursor: pointer; font-size: 1em; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);">← Kembali ke Azura</button>
+            </div>
+            <div class="hidden-symbol">.</div>
+        </footer>
+    </div>
+
+    <script>
+        // Slider states
+        let azuraSlide = 0;
+        let nancySlide = 0;
+        const azuraSlides = document.querySelectorAll('#azura-page .slide');
+        const nancySlides = document.querySelectorAll('#nancy-page .slide');
+
+        // Initialize slider dots
+        function initAzuraSlider() {
+            const dotsContainer = document.getElementById('azura-dots');
+            for (let i = 0; i < 4; i++) {
+                const dot = document.createElement('span');
+                dot.className = 'dot' + (i === 0 ? ' active' : '');
+                dot.onclick = () => goToAzuraSlide(i);
+                dotsContainer.appendChild(dot);
+            }
+            setInterval(autoAzuraSlide, 5000);
+        }
+
+        function initNancySlider() {
+            const dotsContainer = document.getElementById('nancy-dots');
+            for (let i = 0; i < 5; i++) {
+                const dot = document.createElement('span');
+                dot.className = 'dot' + (i === 0 ? ' active' : '');
+                dot.onclick = () => goToNancySlide(i);
+                dotsContainer.appendChild(dot);
+            }
+            setInterval(autoNancySlide, 5000);
+        }
+
+        // Azura slider functions
+        function showAzuraSlide(n) {
+            const slides = document.querySelectorAll('#azura-page .slide');
+            const dots = document.querySelectorAll('#azura-dots .dot');
+            if (n >= slides.length) azuraSlide = 0;
+            if (n < 0) azuraSlide = slides.length - 1;
+            slides.forEach(s => s.classList.remove('active'));
+            dots.forEach(d => d.classList.remove('active'));
+            if (slides[azuraSlide]) slides[azuraSlide].classList.add('active');
+            if (dots[azuraSlide]) dots[azuraSlide].classList.add('active');
+        }
+
+        function changeAzuraSlide(n) {
+            azuraSlide += n;
+            showAzuraSlide(azuraSlide);
+        }
+
+        function goToAzuraSlide(n) {
+            azuraSlide = n;
+            showAzuraSlide(azuraSlide);
+        }
+
+        function autoAzuraSlide() {
+            azuraSlide++;
+            showAzuraSlide(azuraSlide);
+        }
+
+        // Nancy slider functions
+        function showNancySlide(n) {
+            const slides = document.querySelectorAll('#nancy-page .slide');
+            const dots = document.querySelectorAll('#nancy-dots .dot');
+            if (n >= slides.length) nancySlide = 0;
+            if (n < 0) nancySlide = slides.length - 1;
+            slides.forEach(s => s.classList.remove('active'));
+            dots.forEach(d => d.classList.remove('active'));
+            if (slides[nancySlide]) slides[nancySlide].classList.add('active');
+            if (dots[nancySlide]) dots[nancySlide].classList.add('active');
+        }
+
+        function changeNancySlide(n) {
+            nancySlide += n;
+            showNancySlide(nancySlide);
+        }
+
+        function goToNancySlide(n) {
+            nancySlide = n;
+            showNancySlide(nancySlide);
+        }
+
+        function autoNancySlide() {
+            nancySlide++;
+            showNancySlide(nancySlide);
+        }
+
+        // Expand/Toggle functions
+        function toggleExpand(element) {
+            const content = element.querySelector('.expand-content');
+            if (content) {
+                content.classList.toggle('show');
+                if (content.classList.contains('show')) {
+                    element.style.borderLeftColor = '#ff1493';
+                } else {
+                    element.style.borderLeftColor = '#ff69b4';
+                }
+            }
+        }
+
+        // Page navigation
+        function goToPage(page) {
+            const azuraPage = document.getElementById('azura-page');
+            const nancyPage = document.getElementById('nancy-page');
+            const azuraFooter = document.getElementById('azura-footer');
+            const nancyFooter = document.getElementById('nancy-footer');
+            
+            if (page === 'nancy') {
+                azuraPage.style.display = 'none';
+                nancyPage.style.display = 'block';
+                azuraFooter.style.display = 'none';
+                nancyFooter.style.display = 'block';
+                window.scrollTo(0, 0);
+            } else if (page === 'azura') {
+                nancyPage.style.display = 'none';
+                azuraPage.style.display = 'block';
+                nancyFooter.style.display = 'none';
+                azuraFooter.style.display = 'block';
+                window.scrollTo(0, 0);
+            }
+        }
+
+        // Initialize sliders on page load
+        window.addEventListener('load', function() {
+            initAzuraSlider();
+            initNancySlider();
+        });
+    </script>
