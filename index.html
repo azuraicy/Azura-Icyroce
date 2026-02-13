@@ -244,6 +244,194 @@
         .expand-content.show {
             max-height: 500px;
         }
+        
+        /* ===== RESPONSIVE DESIGN - MOBILE FRIENDLY ===== */
+        @media (max-width: 768px) {
+            /* Header adjustments */
+            header h1 {
+                font-size: 1.8em;
+                margin: 0;
+            }
+            
+            header p {
+                font-size: 0.9em;
+                margin: 0.5em 0 0 0;
+            }
+            
+            header {
+                padding: 1em 0;
+            }
+            
+            /* Navigation adjustments */
+            nav {
+                padding: 0.5em 0;
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            nav a {
+                padding: 0.7em 1em;
+                margin: 0;
+                font-size: 0.95em;
+                border-radius: 0;
+                display: block;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            nav a:last-child {
+                border-bottom: none;
+            }
+            
+            /* Container adjustments */
+            .container {
+                width: 95%;
+                padding: 1.5em;
+                margin: 1em auto;
+                border-radius: 8px;
+            }
+            
+            /* Banner slider */
+            .banner-slider {
+                height: 250px;
+            }
+            
+            /* Profile image */
+            .profile-img {
+                max-width: 200px;
+                margin-bottom: 1em;
+            }
+            
+            /* Section titles */
+            .section-title {
+                font-size: 1.4em;
+                margin-bottom: 0.8em;
+            }
+            
+            /* Gallery grid */
+            .gallery {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1em;
+            }
+            
+            .gallery img {
+                height: 150px;
+            }
+            
+            /* On Training section layout */
+            div[style*="display:flex"] {
+                flex-direction: column !important;
+                gap: 1em !important;
+            }
+            
+            div[style*="flex:1"] {
+                min-width: auto !important;
+            }
+            
+            /* Button adjustments */
+            .interactive-btn {
+                padding: 0.7em 1.2em;
+                font-size: 0.9em;
+                margin: 0.3em;
+            }
+            
+            /* Click card */
+            .click-card {
+                display: block;
+                margin: 1em auto;
+                padding: 1.2em;
+            }
+            
+            /* Slider arrows */
+            .slider-arrow {
+                padding: 8px 12px;
+                font-size: 1.5em;
+            }
+            
+            .slider-arrow.prev {
+                left: 10px;
+            }
+            
+            .slider-arrow.next {
+                right: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            /* Extra small screens */
+            header h1 {
+                font-size: 1.4em;
+            }
+            
+            nav a {
+                padding: 0.6em 0.8em;
+                font-size: 0.85em;
+            }
+            
+            .container {
+                width: 100%;
+                padding: 1em;
+                margin: 0.5em 0;
+                border-radius: 0;
+            }
+            
+            .banner-slider {
+                height: 200px;
+            }
+            
+            .section-title {
+                font-size: 1.2em;
+            }
+            
+            .profile-img {
+                max-width: 150px;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 0.8em;
+            }
+            
+            .gallery img {
+                height: 120px;
+            }
+            
+            .interactive-btn {
+                padding: 0.6em 1em;
+                font-size: 0.85em;
+                margin: 0.2em;
+            }
+            
+            .expand-section {
+                margin: 1em 0;
+                padding: 1em;
+                font-size: 0.95em;
+            }
+            
+            footer {
+                padding: 1em 0;
+            }
+            
+            footer p {
+                margin: 0;
+                font-size: 0.9em;
+            }
+            
+            .click-card {
+                margin: 0.8em auto;
+                padding: 1em;
+            }
+            
+            .click-card h3 {
+                font-size: 1.1em;
+                margin: 0.5em 0;
+            }
+            
+            .click-card p {
+                font-size: 0.9em;
+                margin: 0.5em 0;
+            }
+        }
     </style>
 </head>
 <body>
